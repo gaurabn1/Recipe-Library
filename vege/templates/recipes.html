@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %} Recipes {% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="container">
+          {% if user.is_superuser%}
+          <p>User: {{user.username}}</p>
+          {%else%}
+          <p>User: {{user.first_name}} {{user.last_name}}</p>
+          {%endif%}
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'add-recipe' %}">Add-Recipe</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Recipe</li>
+            </ol>
+          </nav>
+          
+            <div class="mb-5">
+                <form>
+                    <div class="form-group">
+                        <label for="search">Search</label>
+                        <input name="search" type="text" class="form-control" id="search" placeholder="Enter Recipe Name">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>    
+        </div>
+        <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Recipe Name</th>
+            <th scope="col">Recipe Description</th>
+            <th scope="col">Recipe Image</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for recipe in recipes %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{recipe.recipe_name}}</td>
+            <td>{{recipe.recipe_description}}</td>
+            <td>
+              <img src="/media/{{recipe.recipe_image}}" height="100px">
+            </td>
+            <td>
+                <a href="/delete_recipe/{{recipe.id}}/" class="btn btn-danger mb-2">Delete</a>
+                <a href="/update_recipe/{{recipe.id}}" class="btn btn-danger">Update</a>
+
+            </td>
+            
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+{% endblock %}

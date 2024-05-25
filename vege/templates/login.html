@@ -1,0 +1,37 @@
+{%extends 'base_no_navbar.html'%}
+
+
+{%block title%} Login Page {%endblock%}
+
+{%block content%}
+
+<div class="container mt-5">
+    <form method="post" class="col-6 mx-auto card p-3 shadow-lg">
+        {% csrf_token %}
+        <h2 class="text-center">Login</h2><hr>
+        {% if messages %}
+        {{messages.tags}}
+        <div class="alert alert-primary" role="alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %} 
+        </div>
+        {% endif %}
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Username</label>
+          <input type="text" class="form-control" id="exampleInputEmail1" name="username">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Remeber me</label>
+        </div>
+        <p>Don't have an account?<a href="{%url 'register'%}"> Register</a></p>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+</div>
+
+  {%endblock%}

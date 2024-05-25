@@ -1,0 +1,27 @@
+<!DOCTYPE html>{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+    <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a href="{% url 'recipe' %}" class="navbar-brand text-white">Navbar</a>
+            <form class="d-flex" role="logout">
+              <a class="btn btn-outline-success" href="{% url 'logout' %}">Logout</a>
+            </form>
+          </div>
+    </nav>
+
+    {%block content%}
+        
+    {% endblock %}
+</body>
+</html>

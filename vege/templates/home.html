@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %} HomePage {% endblock %}
+
+{%block content%}
+
+<h1>This is a HomePage</h1>
+<p><a href="{% url 'add-recipe' %}">Add Recipes</a></p>
+<p><a href="{%url 'recipe' %}">Recipes</a></p>
+<p><a href="{%url 'admin:index' %}">Admin Page</a></p>
+
+{% endblock %}
