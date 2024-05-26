@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Recipe
@@ -87,19 +88,32 @@ def recipe(request):
 
 @login_required(login_url='login')
 def import_recipe(request):
+    
     queryset = Recipe.objects.all()
     context = {'recipes' : queryset}
-    if request.GET.get('search'):
-        queryset = queryset.filter(recipe_name__icontains = request.GET.get('search'))
-        context = {'recipes': queryset}
-        return render(request, 'recipes.html', context)
+    if request.method == 'GET':
+        if request.GET.get('action') == 'search':
+            if request.GET.get('search'):
+                queryset = queryset.filter(recipe_name__icontains = request.GET.get('search'))
+                if not queryset:    
+                    messages.info(request, "No Recipe Found")
+                    return redirect('recipe')
+                context = {'recipes': queryset}
+                return render(request, 'recipes.html', context)
+        elif request.GET.get('action') == 'sort':
+            queryset = queryset.order_by('-id').values()
+            context = {'recipes' : queryset}
+            return render(request, 'recipes.html', context)
     return render(request, 'recipes.html', context)
 
     
 
-
 def delete_recipe(request, id):
     queryset = Recipe.objects.get(id=id)
+    image = queryset.recipe_image
+    image_path = queryset.recipe_image.path
+    print(image_path)
+    os.remove(image_path)
     queryset.delete()
     return redirect('/recipes/')
 
