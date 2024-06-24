@@ -116,7 +116,7 @@
             <h5 class="card-title"><b>{{recipe.recipe_name}}</b></h5><hr>
             <p class="card-text" style="height: 120px; overflow: hidden;">{{recipe.recipe_description}}</p>
             <a href="#" class="btn btn-primary">Visit Recipe</a>
-            <a href="/delete_recipe/{{recipe.id}}/" class="btn btn-danger">Delete</a>
+            <a href="/delete_recipe/{{recipe.id}}/" class="btn btn-danger delete-recipe-btn" >Delete</a>
             <a href="/update_recipe/{{recipe.id}}" class="btn btn-danger">Update</a>
           </div>
         </div>
@@ -125,6 +125,19 @@
       </div>
     </div>
 
-
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+    document.querySelectorAll('.delete-recipe-btn').forEach(function(button){
+      button.addEventListener('click', function(e){
+        e.preventDefault();
+        var confirmed = confirm('Are you sure you want to delete this recipe?');
+        if (confirmed){
+          window.location.href = this.href;
+        }
+      })
+    })
+    
+  })
+</script>
 
 {% endblock %}
